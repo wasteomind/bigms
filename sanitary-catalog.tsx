@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import {
@@ -33,11 +32,21 @@ import {
   User,
   ShoppingCart,
 } from "lucide-react"
-import Banner3D from "./components/banner-3d"
-import HeroSearch from "./components/hero-search"
 
-export default function Component() {
-  const [cartTotal, setCartTotal] = useState(12345.67)
+import HeroSearch from "./components/hero-search"
+import ImageCarousel from "./components/image-carousel"
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
+import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
+
+export default function CatalogPage() {
+  // MOCK DATA ( замените на реальные данные / состояние)
+  const cartItems = [
+    { id: 1, name: "Унитаз «Комфорт»", quantity: 1, price: 8500, image: "/simple-white-toilet.png" },
+    { id: 4, name: "Смеситель «Грань»", quantity: 2, price: 4200, image: "/chrome-bathroom-faucet.png" },
+    { id: 7, name: "Зеркало «Аура»", quantity: 1, price: 6800, image: "/ornate-gold-mirror.png" },
+  ]
+  const cartTotal = cartItems.reduce((t, i) => t + i.price * i.quantity, 0)
 
   const navLinks = [
     { name: "О компании", href: "/about" },
@@ -50,386 +59,276 @@ export default function Component() {
   ]
 
   const advantages = [
-    {
-      id: 1,
-      title: "Гарантия качества",
-      description: "Только проверенные бренды",
-      icon: Award,
-    },
-    {
-      id: 2,
-      title: "Быстрая доставка",
-      description: "По всей России",
-      icon: Truck,
-    },
-    {
-      id: 3,
-      title: "Опыт работы",
-      description: "Более 15 лет на рынке",
-      icon: Clock,
-    },
-    {
-      id: 4,
-      title: "Профессионалы",
-      description: "Команда экспертов",
-      icon: Users,
-    },
+    { id: 1, title: "Гарантия качества", description: "Только проверенные бренды", icon: Award },
+    { id: 2, title: "Быстрая доставка", description: "По всей России", icon: Truck },
+    { id: 3, title: "Опыт работы", description: "Более 15 лет на рынке", icon: Clock },
+    { id: 4, title: "Профессионалы", description: "Команда экспертов", icon: Users },
   ]
 
   const categories = [
-    {
-      id: 1,
-      name: "Унитазы\nБиде",
-      description: "Modern and efficient toilet solutions",
-      icon: Home,
-      productCount: 156,
-      image: "/placeholder.svg?height=300&width=400",
-    },
-    {
-      id: 2,
-      name: "Ванные\nРаковины",
-      description: "Elegant washbasins and vanity units",
-      icon: Droplets,
-      productCount: 89,
-      image: "/placeholder.svg?height=300&width=400",
-    },
-    {
-      id: 3,
-      name: "Ванны\nДуши",
-      description: "Luxurious bathing experiences",
-      icon: Bath,
-      productCount: 124,
-      image: "/placeholder.svg?height=300&width=400",
-    },
-    {
-      id: 4,
-      name: "Краны\nСмесители",
-      description: "Premium water control solutions",
-      icon: Wrench,
-      productCount: 203,
-      image: "/placeholder.svg?height=300&width=400",
-    },
-    {
-      id: 5,
-      name: "Душевые\nСистемы",
-      description: "Complete shower solutions",
-      icon: Waves,
-      productCount: 67,
-      image: "/placeholder.svg?height=300&width=400",
-    },
-    {
-      id: 6,
-      name: "Ванные\nАксессуары",
-      description: "Essential bathroom accessories",
-      icon: Sparkles,
-      productCount: 145,
-      image: "/placeholder.svg?height=300&width=400",
-    },
-    {
-      id: 7,
-      name: "Ванные\nТумбы",
-      description: "Storage and style combined",
-      icon: Package,
-      productCount: 78,
-      image: "/placeholder.svg?height=300&width=400",
-    },
-    {
-      id: 8,
-      name: "Ванные\nЗеркала",
-      description: "Reflective elegance for bathrooms",
-      icon: Circle,
-      productCount: 92,
-      image: "/placeholder.svg?height=300&width=400",
-    },
-    {
-      id: 9,
-      name: "Ванное\nОсвещение",
-      description: "Illuminate your bathroom space",
-      icon: Lightbulb,
-      productCount: 134,
-      image: "/placeholder.svg?height=300&width=400",
-    },
-    {
-      id: 10,
-      name: "Полотенце\nСушители",
-      description: "Heated towel solutions",
-      icon: Zap,
-      productCount: 156,
-      image: "/placeholder.svg?height=300&width=400",
-    },
-    {
-      id: 11,
-      name: "Мыльные\nДозаторы",
-      description: "Hygienic hand care solutions",
-      icon: Spray,
-      productCount: 87,
-      image: "/placeholder.svg?height=300&width=400",
-    },
-    {
-      id: 12,
-      name: "Унитазные\nСиденья",
-      description: "Comfort and hygiene combined",
-      icon: Disc,
-      productCount: 65,
-      image: "/placeholder.svg?height=300&width=400",
-    },
-    {
-      id: 13,
-      name: "Сливные\nСистемы",
-      description: "Efficient water drainage",
-      icon: Filter,
-      productCount: 123,
-      image: "/placeholder.svg?height=300&width=400",
-    },
-    {
-      id: 14,
-      name: "Ванная\nПлитка",
-      description: "Beautiful wall and floor tiles",
-      icon: Grid3x3,
-      productCount: 289,
-      image: "/placeholder.svg?height=300&width=400",
-    },
-    {
-      id: 15,
-      name: "Водные\nНагреватели",
-      description: "Instant hot water solutions",
-      icon: Flame,
-      productCount: 45,
-      image: "/placeholder.svg?height=300&width=400",
-    },
-    {
-      id: 16,
-      name: "Ванные\nВентиляторы",
-      description: "Ventilation and air circulation",
-      icon: Fan,
-      productCount: 67,
-      image: "/placeholder.svg?height=300&width=400",
-    },
-    {
-      id: 17,
-      name: "Безопасные\nПоручни",
-      description: "Safety and accessibility",
-      icon: Shield,
-      productCount: 89,
-      image: "/placeholder.svg?height=300&width=400",
-    },
-    {
-      id: 18,
-      name: "Душевые\nДвери",
-      description: "Glass enclosure solutions",
-      icon: DoorOpen,
-      productCount: 112,
-      image: "/placeholder.svg?height=300&width=400",
-    },
-    {
-      id: 19,
-      name: "Ванные\nШкафы",
-      description: "Storage and organization",
-      icon: Archive,
-      productCount: 156,
-      image: "/placeholder.svg?height=300&width=400",
-    },
-    {
-      id: 20,
-      name: "Сантехнические\nИнструменты",
-      description: "Professional installation tools",
-      icon: Settings,
-      productCount: 234,
-      image: "/placeholder.svg?height=300&width=400",
-    },
+    { id: 1, name: "Унитазы\nБиде", icon: Home, productCount: 156, image: "/categories/toilets-bidets.png" },
+    { id: 2, name: "Ванные\nРаковины", icon: Droplets, productCount: 89, image: "/categories/sinks.png" },
+    { id: 3, name: "Ванны\nДуши", icon: Bath, productCount: 124, image: "/categories/baths-showers.png" },
+    { id: 4, name: "Краны\nСмесители", icon: Wrench, productCount: 203, image: "/categories/faucets-mixers.png" },
+    { id: 5, name: "Душевые\nСистемы", icon: Waves, productCount: 67, image: "/categories/shower-systems.png" },
+    { id: 6, name: "Ванные\nАксессуары", icon: Sparkles, productCount: 145, image: "/categories/accessories.png" },
+    { id: 7, name: "Ванные\nТумбы", icon: Package, productCount: 78, image: "/categories/vanities.png" },
+    { id: 8, name: "Ванные\nЗеркала", icon: Circle, productCount: 92, image: "/categories/mirrors.png" },
+    { id: 9, name: "Ванное\nОсвещение", icon: Lightbulb, productCount: 134, image: "/categories/lighting.png" },
+    { id: 10, name: "Полотенце\nСушители", icon: Zap, productCount: 156, image: "/categories/towel-warmers.png" },
+    { id: 11, name: "Мыльные\nДозаторы", icon: Spray, productCount: 87, image: "/categories/dispensers.png" },
+    { id: 12, name: "Унитазные\nСиденья", icon: Disc, productCount: 65, image: "/categories/toilet-seats.png" },
+    { id: 13, name: "Сливные\nСистемы", icon: Filter, productCount: 123, image: "/categories/drains.png" },
+    { id: 14, name: "Ванная\nПлитка", icon: Grid3x3, productCount: 289, image: "/categories/tiles.png" },
+    { id: 15, name: "Водные\nНагреватели", icon: Flame, productCount: 45, image: "/categories/water-heaters.png" },
+    { id: 16, name: "Ванные\nВентиляторы", icon: Fan, productCount: 67, image: "/categories/fans.png" },
+    { id: 17, name: "Безопасные\nПоручни", icon: Shield, productCount: 89, image: "/categories/grab-bars.png" },
+    { id: 18, name: "Душевые\nДвери", icon: DoorOpen, productCount: 112, image: "/categories/shower-doors.png" },
+    { id: 19, name: "Ванные\nШкафы", icon: Archive, productCount: 156, image: "/categories/cabinets.png" },
+    { id: 20, name: "Инструменты\nСантехника", icon: Settings, productCount: 234, image: "/categories/tools.png" },
   ]
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Top Navigation */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-2">
-            {/* Logo */}
-            <div className="flex-shrink-0">
-              <Link href="/" className="flex items-center gap-2">
-                <Image src="/logo.png" alt="Большой мастер лого" width={40} height={40} className="h-10 w-auto" />
-                <span className="text-xl font-bold text-gray-800">Большой мастер</span>
+      {/* ────── Top Navigation ────── */}
+      <header className="sticky top-0 z-50 border-b bg-white">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2">
+            <Image src="/logo.png" alt="Логотип" width={40} height={40} />
+            <span className="text-xl font-bold text-gray-800">Большой мастер</span>
+          </Link>
+
+          {/* Center links */}
+          <nav className="hidden md:flex gap-4 lg:gap-6">
+            {navLinks.map((l) => (
+              <Link key={l.name} href={l.href} className="text-sm font-medium text-gray-600 hover:text-primary">
+                {l.name}
               </Link>
-            </div>
+            ))}
+          </nav>
 
-            {/* Centered Links */}
-            <nav className="hidden md:flex justify-center gap-4 lg:gap-6">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className="text-sm font-medium text-gray-600 hover:text-primary transition-colors"
-                >
-                  {link.name}
-                </Link>
-              ))}
-            </nav>
+          {/* Right side */}
+          <div className="hidden md:flex items-center gap-4">
+            <a
+              href="tel:+78005553535"
+              className="flex items-center gap-2 font-semibold text-gray-700 hover:text-primary"
+            >
+              <Phone className="h-4 w-4" />8 (800) 555-35-35
+            </a>
 
-            {/* Right side content */}
-            <div className="hidden md:flex items-center justify-end gap-4">
-              <a
-                href="tel:+78005553535"
-                className="flex items-center gap-2 text-sm font-semibold text-gray-700 hover:text-primary"
-              >
-                <Phone className="w-4 h-4" />
-                <span>8 (800) 555-35-35</span>
-              </a>
-              <div className="h-6 w-px bg-gray-200" />
-              <div className="flex items-center gap-4">
-                <Link href="/profile" className="text-gray-600 hover:text-primary">
-                  <User className="w-6 h-6" />
-                  <span className="sr-only">Личный кабинет</span>
-                </Link>
-                <Link href="/cart" className="flex items-center gap-2 text-gray-600 hover:text-primary">
-                  <ShoppingCart className="w-6 h-6" />
+            <div className="h-6 w-px bg-gray-200" />
+
+            {/* Profile */}
+            <Link href="/profile" className="text-gray-600 hover:text-primary">
+              <User className="h-6 w-6" />
+              <span className="sr-only">Профиль</span>
+            </Link>
+
+            {/* Cart with hover card */}
+            <HoverCard>
+              <HoverCardTrigger asChild>
+                <Link href="/cart" className="relative flex items-center gap-2 text-gray-600 hover:text-primary">
+                  <ShoppingCart className="h-6 w-6" />
                   <span className="text-sm font-semibold">
                     {new Intl.NumberFormat("ru-RU", { style: "currency", currency: "RUB" }).format(cartTotal)}
                   </span>
+                  {cartItems.length > 0 && (
+                    <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-accent text-xs font-bold text-white">
+                      {cartItems.length}
+                    </span>
+                  )}
                 </Link>
-              </div>
-            </div>
+              </HoverCardTrigger>
+
+              <HoverCardContent className="w-80" sideOffset={10}>
+                <div className="flex flex-col gap-4">
+                  <div className="flex justify-between">
+                    <h4 className="font-semibold">Корзина</h4>
+                    <span className="text-sm text-muted-foreground">{cartItems.length} товар(а)</span>
+                  </div>
+
+                  <Separator />
+
+                  {cartItems.length ? (
+                    <>
+                      <div className="flex max-h-64 flex-col gap-4 overflow-y-auto pr-2">
+                        {cartItems.map((item) => (
+                          <div key={item.id} className="flex items-center justify-between gap-4">
+                            <div className="flex items-center gap-3">
+                              <Image
+                                src={item.image || "/placeholder.svg"}
+                                alt={item.name}
+                                width={48}
+                                height={48}
+                                className="rounded-md object-cover"
+                              />
+                              <div>
+                                <p className="text-sm font-medium">{item.name}</p>
+                                <p className="text-xs text-muted-foreground">
+                                  {item.quantity} ×{" "}
+                                  {new Intl.NumberFormat("ru-RU", {
+                                    style: "currency",
+                                    currency: "RUB",
+                                    minimumFractionDigits: 0,
+                                  }).format(item.price)}
+                                </p>
+                              </div>
+                            </div>
+                            <p className="text-sm font-semibold">
+                              {new Intl.NumberFormat("ru-RU", {
+                                style: "currency",
+                                currency: "RUB",
+                                minimumFractionDigits: 0,
+                              }).format(item.price * item.quantity)}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+
+                      <Separator />
+
+                      <div className="flex justify-between text-base font-semibold">
+                        <span>Итого:</span>
+                        <span>
+                          {new Intl.NumberFormat("ru-RU", { style: "currency", currency: "RUB" }).format(cartTotal)}
+                        </span>
+                      </div>
+
+                      <div className="flex flex-col gap-2">
+                        <Button asChild className="w-full">
+                          <Link href="/cart">Перейти в корзину</Link>
+                        </Button>
+                        <Button variant="outline" className="w-full bg-transparent">
+                          Быстрый заказ
+                        </Button>
+                      </div>
+                    </>
+                  ) : (
+                    <p className="py-8 text-center text-muted-foreground">Ваша корзина пуста</p>
+                  )}
+                </div>
+              </HoverCardContent>
+            </HoverCard>
           </div>
         </div>
       </header>
 
-      {/* Header Section */}
-      <div className="relative bg-gradient-to-br from-blue-50 to-white py-16 px-4">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5"></div>
-        <div className="relative max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+      {/* ────── Hero Section ────── */}
+      <section className="relative bg-gradient-to-br from-blue-50 to-white px-4 py-16">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5" />
+        <div className="relative mx-auto max-w-7xl text-center">
+          <h1 className="mb-6 text-4xl font-bold md:text-6xl">
             Каталог
             <span className="block text-primary">Сантехники</span>
           </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8">Найдите идеальную сантехнику для вашего дома</p>
+          <p className="mx-auto mb-8 max-w-2xl text-xl text-gray-600">Найдите идеальную сантехнику для вашего дома</p>
           <HeroSearch />
         </div>
-      </div>
+      </section>
 
-      {/* Advantages Section */}
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {advantages.map((advantage) => {
-            const IconComponent = advantage.icon
+      {/* ────── Advantages ────── */}
+      <section className="mx-auto max-w-7xl px-4 py-12">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          {advantages.map((a) => {
+            const Icon = a.icon
             return (
-              <div
-                key={advantage.id}
-                className="group flex flex-col items-center text-center p-6 bg-white transition-all duration-300"
-              >
-                <div className="w-20 h-20 rounded-xl flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:shadow-primary/20 transition-all duration-300">
-                  <IconComponent
-                    className="w-10 h-10 text-gray-600 group-hover:text-primary transition-colors duration-300"
+              <div key={a.id} className="group flex flex-col items-center p-6 text-center transition">
+                <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-xl group-hover:shadow-lg group-hover:shadow-primary/20">
+                  <Icon
+                    className="h-10 w-10 text-gray-600 transition-colors group-hover:text-primary"
                     strokeWidth={1}
                   />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">{advantage.title}</h3>
-                <p className="text-sm text-gray-600">{advantage.description}</p>
+                <h3 className="mb-2 text-lg font-semibold">{a.title}</h3>
+                <p className="text-sm text-gray-600">{a.description}</p>
               </div>
             )
           })}
         </div>
-      </div>
+      </section>
 
-      {/* 3D Banner Section */}
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="relative rounded-2xl">
-          <div className="absolute inset-0 z-0">
-            <Banner3D />
-          </div>
-          <div className="relative z-10 flex flex-col items-center justify-center text-center p-8 min-h-[400px] md:min-h-[500px]">
-            <div className="bg-white/50 backdrop-blur-sm p-8 rounded-2xl">
-              <h2 className="text-3xl md:text-5xl font-bold text-gray-900">
-                Всегда идем
-                <span className="text-primary"> вам навстречу</span>
-              </h2>
-              <p className="mt-4 text-lg text-gray-700 max-w-xl">
-                Гибкие решения и индивидуальный подход к каждому клиенту.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* ────── Image Carousel Section ────── */}
+      <section className="mx-auto max-w-7xl px-4">
+        <ImageCarousel />
+      </section>
 
-      {/* Categories Grid */}
-      <div className="max-w-7xl mx-auto px-4 py-16">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Каталог</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">***</p>
+      {/* ────── Categories Grid ────── */}
+      <section className="mx-auto max-w-7xl px-4 py-16">
+        <div className="mb-12 text-center">
+          <h2 className="mb-4 text-3xl font-bold">Каталог</h2>
+          <p className="text-gray-600">***</p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
-          {categories.map((category) => {
-            const IconComponent = category.icon
+        <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          {categories.map((cat) => {
+            const Icon = cat.icon
             return (
               <Link
-                key={category.id}
-                href={`/category/${category.id}`}
-                className="group relative overflow-hidden rounded-2xl bg-white shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
+                key={cat.id}
+                href={`/category/${cat.id}`}
+                className="group relative overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
               >
-                {/* Background Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/7 via-white to-gray-300/7 opacity-0 group-hover:opacity-70 transition-opacity duration-500"></div>
+                {/* Decorative gradient */}
+                <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-70 bg-gradient-to-br from-primary/7 via-white to-gray-300/7" />
 
-                {/* Image Container */}
-                <div className="relative overflow-hidden rounded-t-2xl">
+                {/* Image */}
+                <div className="relative h-64 overflow-hidden rounded-t-2xl">
                   <Image
-                    src={category.image || "/placeholder.svg"}
-                    alt={category.name}
-                    width={400}
-                    height={300}
-                    className="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110"
+                    src={cat.image || "/placeholder.svg"}
+                    alt={cat.name}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 bg-gradient-to-t from-black/20 to-transparent" />
 
-                  {/* Floating Icon */}
-                  <div className="absolute top-4 right-4 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                    <IconComponent className="w-6 h-6 text-primary" />
+                  {/* Floating icon */}
+                  <div className="absolute top-4 right-4 flex h-12 w-12 translate-y-2 items-center justify-center rounded-full bg-white/90 opacity-0 shadow-lg backdrop-blur-sm transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+                    <Icon className="h-6 w-6 text-primary" />
                   </div>
                 </div>
 
-                {/* Content */}
-                <div className="relative p-3 flex flex-col justify-between">
-                  <div className="flex items-start justify-between mb-1 min-h-[60px]">
-                    <h3 className="text-lg font-bold text-gray-900 group-hover:text-primary transition-colors duration-300 whitespace-pre-line leading-tight">
-                      {category.name}
+                {/* Card content */}
+                <div className="relative p-3">
+                  <div className="mb-1 flex min-h-[60px] items-start justify-between">
+                    <h3 className="whitespace-pre-line text-lg font-bold leading-tight transition-colors duration-300 group-hover:text-primary">
+                      {cat.name}
                     </h3>
-                    <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-accent transform translate-x-0 group-hover:translate-x-1 transition-all duration-300 flex-shrink-0" />
+                    <ArrowRight className="h-5 w-5 flex-shrink-0 translate-x-0 text-gray-400 transition-all duration-300 group-hover:translate-x-1 group-hover:text-accent" />
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <span className="inline-flex items-center gap-1 text-sm font-medium text-primary bg-primary/10 rounded-full px-3 py-1">
-                      {category.productCount} товаров
+                    <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary">
+                      {cat.productCount} товаров
                     </span>
-
-                    {/* Animated Border */}
-                    <div className="w-8 h-0.5 bg-gradient-to-r from-primary to-accent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+                    <div className="origin-left h-0.5 w-8 scale-x-0 bg-gradient-to-r from-primary to-accent transition-transform duration-500 group-hover:scale-x-100" />
                   </div>
                 </div>
-
-                {/* Hover Glow Effect */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-primary/14 via-gray-400/14 to-gray-300/14 opacity-0 group-hover:opacity-70 transition-opacity duration-500 pointer-events-none"></div>
               </Link>
             )
           })}
         </div>
-      </div>
+      </section>
 
-      {/* Call to Action Section */}
-      <div className="bg-gradient-to-r from-primary to-primary/80 py-16 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Нужна помощь в выборе?</h2>
-          <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
+      {/* ────── CTA ────── */}
+      <section className="bg-gradient-to-r from-primary to-primary/80 px-4 py-16 text-center">
+        <div className="mx-auto max-w-4xl">
+          <h2 className="mb-6 text-3xl font-bold text-white md:text-4xl">Нужна помощь в выборе?</h2>
+          <p className="mx-auto mb-8 max-w-2xl text-lg text-blue-100">
             Наши эксперты помогут найти идеальные решения для вашего проекта
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-primary font-semibold px-8 py-3 rounded-full hover:bg-gray-50 transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+
+          <div className="flex flex-col justify-center gap-4 sm:flex-row">
+            <button className="rounded-full bg-white px-8 py-3 font-semibold text-primary shadow-lg transition hover:-translate-y-0.5 hover:bg-gray-50 hover:shadow-xl">
               Связаться с экспертом
             </button>
-            <button className="border-2 border-white text-white font-semibold px-8 py-3 rounded-full hover:bg-white hover:text-primary transition-all duration-300">
+            <button className="rounded-full border-2 border-white px-8 py-3 font-semibold text-white transition hover:bg-white hover:text-primary">
               Посмотреть каталог
             </button>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   )
 }
