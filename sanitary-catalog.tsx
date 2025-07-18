@@ -24,9 +24,41 @@ import {
   DoorOpen,
   Archive,
   Settings,
+  Award,
+  Truck,
+  Clock,
+  Users,
 } from "lucide-react"
+import Banner3D from "./components/banner-3d"
 
 export default function Component() {
+  const advantages = [
+    {
+      id: 1,
+      title: "Гарантия качества",
+      description: "Только проверенные бренды",
+      icon: Award,
+    },
+    {
+      id: 2,
+      title: "Быстрая доставка",
+      description: "По всей России",
+      icon: Truck,
+    },
+    {
+      id: 3,
+      title: "Опыт работы",
+      description: "Более 15 лет на рынке",
+      icon: Clock,
+    },
+    {
+      id: 4,
+      title: "Профессионалы",
+      description: "Команда экспертов",
+      icon: Users,
+    },
+  ]
+
   const categories = [
     {
       id: 1,
@@ -204,6 +236,50 @@ export default function Component() {
           <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm rounded-full px-6 py-3 shadow-lg">
             <Sparkles className="w-5 h-5 text-primary" />
             <span className="text-gray-700 font-medium">Гарантия качества</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Advantages Section */}
+      <div className="max-w-7xl mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {advantages.map((advantage) => {
+            const IconComponent = advantage.icon
+            return (
+              <div
+                key={advantage.id}
+                className="group flex flex-col items-center text-center p-6 bg-white transition-all duration-300"
+              >
+                <div className="w-20 h-20 rounded-xl flex items-center justify-center mb-4 group-hover:shadow-lg group-hover:shadow-primary/20 transition-all duration-300">
+                  <IconComponent
+                    className="w-10 h-10 text-gray-600 group-hover:text-primary transition-colors duration-300"
+                    strokeWidth={1}
+                  />
+                </div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">{advantage.title}</h3>
+                <p className="text-sm text-gray-600">{advantage.description}</p>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+
+      {/* 3D Banner Section */}
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="relative rounded-2xl overflow-hidden">
+          <div className="absolute inset-0 z-0">
+            <Banner3D />
+          </div>
+          <div className="relative z-10 flex flex-col items-center justify-center text-center p-8 min-h-[400px] md:min-h-[500px]">
+            <div className="bg-white/50 backdrop-blur-sm p-8 rounded-2xl">
+              <h2 className="text-3xl md:text-5xl font-bold text-gray-900">
+                Всегда идем
+                <span className="text-primary"> вам навстречу</span>
+              </h2>
+              <p className="mt-4 text-lg text-gray-700 max-w-xl">
+                Гибкие решения и индивидуальный подход к каждому клиенту.
+              </p>
+            </div>
           </div>
         </div>
       </div>
