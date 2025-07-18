@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import {
@@ -28,10 +29,26 @@ import {
   Truck,
   Clock,
   Users,
+  Phone,
+  User,
+  ShoppingCart,
 } from "lucide-react"
 import Banner3D from "./components/banner-3d"
+import HeroSearch from "./components/hero-search"
 
 export default function Component() {
+  const [cartTotal, setCartTotal] = useState(12345.67)
+
+  const navLinks = [
+    { name: "О компании", href: "/about" },
+    { name: "Бренды", href: "/brands" },
+    { name: "Доставка", href: "/delivery" },
+    { name: "Гарантия", href: "/warranty" },
+    { name: "Оплата", href: "/payment" },
+    { name: "Сертификаты", href: "/certificates" },
+    { name: "Контакты", href: "/contacts" },
+  ]
+
   const advantages = [
     {
       id: 1,
@@ -224,8 +241,60 @@ export default function Component() {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Top Navigation */}
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-2">
+            {/* Logo */}
+            <div className="flex-shrink-0">
+              <Link href="/" className="flex items-center gap-2">
+                <Image src="/logo.png" alt="Большой мастер лого" width={40} height={40} className="h-10 w-auto" />
+                <span className="text-xl font-bold text-gray-800">Большой мастер</span>
+              </Link>
+            </div>
+
+            {/* Centered Links */}
+            <nav className="hidden md:flex justify-center gap-4 lg:gap-6">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className="text-sm font-medium text-gray-600 hover:text-primary transition-colors"
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </nav>
+
+            {/* Right side content */}
+            <div className="hidden md:flex items-center justify-end gap-4">
+              <a
+                href="tel:+78005553535"
+                className="flex items-center gap-2 text-sm font-semibold text-gray-700 hover:text-primary"
+              >
+                <Phone className="w-4 h-4" />
+                <span>8 (800) 555-35-35</span>
+              </a>
+              <div className="h-6 w-px bg-gray-200" />
+              <div className="flex items-center gap-4">
+                <Link href="/profile" className="text-gray-600 hover:text-primary">
+                  <User className="w-6 h-6" />
+                  <span className="sr-only">Личный кабинет</span>
+                </Link>
+                <Link href="/cart" className="flex items-center gap-2 text-gray-600 hover:text-primary">
+                  <ShoppingCart className="w-6 h-6" />
+                  <span className="text-sm font-semibold">
+                    {new Intl.NumberFormat("ru-RU", { style: "currency", currency: "RUB" }).format(cartTotal)}
+                  </span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
       {/* Header Section */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-blue-50 to-white py-16 px-4">
+      <div className="relative bg-gradient-to-br from-blue-50 to-white py-16 px-4">
         <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5"></div>
         <div className="relative max-w-7xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
@@ -233,10 +302,7 @@ export default function Component() {
             <span className="block text-primary">Сантехники</span>
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8">Найдите идеальную сантехнику для вашего дома</p>
-          <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm rounded-full px-6 py-3 shadow-lg">
-            <Sparkles className="w-5 h-5 text-primary" />
-            <span className="text-gray-700 font-medium">Гарантия качества</span>
-          </div>
+          <HeroSearch />
         </div>
       </div>
 
@@ -266,7 +332,7 @@ export default function Component() {
 
       {/* 3D Banner Section */}
       <div className="max-w-7xl mx-auto px-4">
-        <div className="relative rounded-2xl overflow-hidden">
+        <div className="relative rounded-2xl">
           <div className="absolute inset-0 z-0">
             <Banner3D />
           </div>
